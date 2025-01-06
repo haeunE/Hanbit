@@ -26,3 +26,18 @@ spring.mail.username=your-email@gmail.com
 spring.mail.password=your-application-password  # 애플리케이션 비밀번호 사용
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
+
+# 네이버 지도 API
+네이버 지도 기능을 사용하시려면 아래 내용을 진행하셔야 합니다.
+
+## 1. ncloud 가입
+1. [https://www.ncloud.com/ 가입하기](https://www.ncloud.com/product/applicationService/maps) 이용신청 누르기
+2. 로그인/회원가입 하기
+3. 카드등록하기
+3. AI·NAVER API1에 들어가서 API발급받기
+
+## 2. application.properties 설정하기
+```
+map.api.client-id=클라이언트 아이디
+map.api.client-secret=클라이언트 시크릿 키
+```
