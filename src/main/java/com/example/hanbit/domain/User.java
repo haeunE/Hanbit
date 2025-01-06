@@ -11,8 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,7 +41,7 @@ public class User {
 	@Column(nullable = false, length = 10)
 	private String name;
 	
-	//이메일
+	// 이메일
 	@Column(nullable = false, length = 50, unique = true)
 	private String email;
 	
@@ -50,11 +50,18 @@ public class User {
 	@Column(nullable = false)
 	private Timestamp createDate;
 	
-	//전화번호
-	@Column(nullable = false, unique = true, length=11)
+	@UpdateTimestamp
+	private Timestamp updateDate;
+	
+	//비상 연락처
+	@Column(nullable = false)
 	private String tel;
+	
+	@Column(nullable = false)
+	private boolean foreignYN;
 	
 	//Rolltype
 	@Enumerated(EnumType.STRING)
-	private RollType role;
+	@Column(nullable = false)
+	private RoleType role = RoleType.MEMBER;
 }
