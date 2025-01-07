@@ -26,7 +26,7 @@ spring.mail.username=your-email@gmail.com
 spring.mail.password=your-application-password  # 애플리케이션 비밀번호 사용
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
-
+````
 # 네이버 지도 API
 네이버 지도 기능을 사용하시려면 아래 내용을 진행하셔야 합니다.
 
@@ -41,3 +41,39 @@ spring.mail.properties.mail.smtp.starttls.enable=true
 map.api.client-id=클라이언트 아이디
 map.api.client-secret=클라이언트 시크릿 키
 ```
+
+# application.properties
+```
+spring.application.name=hanbit
+
+# spring server
+server.port=8888
+server.servlet.context-path=/
+server.servlet.encoding.charset=UTF-8
+
+#DB
+spring.datasource.url=jdbc:mysql://localhost:3306/hanbit?useSSL=false&serverTimezone=Asia/Seoul
+spring.datasource.username=root
+spring.datasource.password=1234
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# JPA 
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.show_sql=true
+
+spring.jackson.time-zone=Asia/Seoul
+
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=your-email@gmail.com
+spring.mail.password=your-application-password  # 애플리케이션 비밀번호 사용
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+
+map.api.client-id=클라이언트 아이디
+map.api.client-secret=클라이언트 시크릿 키
+
+
+
