@@ -1,6 +1,7 @@
 package com.example.hanbit.domain;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,20 +53,14 @@ public class User {
 	@Column(nullable = false)
 	private Timestamp createDate;
 	
-	@UpdateTimestamp
-	private Timestamp updateDate;
-	
 	//비상 연락처
 	@Column(nullable = false)
 	@UpdateTimestamp
-	private Timestamp updateDate;
+	private LocalDateTime updateDate;
 	
 	//비상 연락처
 	@Column(nullable = false)
 	private String tel;
-	
-	@Column(nullable = false)
-	private boolean foreignYN;
 	
 	@Column(nullable = false)
 	private boolean foreignYN;

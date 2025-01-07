@@ -7,16 +7,13 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.hanbit.domain.RoleType;
 import com.example.hanbit.domain.User;
-import com.example.hanbit.dto.LoginForm;
 import com.example.hanbit.dto.SignUpForm;
+import com.example.hanbit.dto.UpdateForm;
 import com.example.hanbit.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -26,8 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
-	private final JwtService jwtService;
-	private final UserDetailsService userDetailsService;  // UserDetailsService 주입
+	
 
 	
 	public void checkUser(User user) {
@@ -53,7 +49,7 @@ public class UserService {
 	    // 사용자 저장
 	    userRepository.save(user);
 	}
-	public User updateUser(String username, User userDetails) {
+	public User updateUser(String username, UpdateForm userDetails) {
         Optional<User> existingUserOptional = userRepository.findByUsername(username);
         System.out.println("===========================");
         System.out.println(existingUserOptional);
@@ -61,13 +57,8 @@ public class UserService {
             User existingUser = existingUserOptional.get();
             System.out.println("===========================");
             System.out.println(existingUser);
-            // 사용자 정보만 수정
-            if (userDetails.getName() != null) {
-                existingUser.setName(userDetails.getName());
-            }
-            if (userDetails.getEmail() != null) {
-                existingUser.setEmail(userDetails.getEmail());
-            }
+            
+            
             if (userDetails.getTel() != null) {
                 existingUser.setTel(userDetails.getTel());
             }
@@ -75,7 +66,7 @@ public class UserService {
                 existingUser.setForeignYN(userDetails.isForeignYN());
             }
             if (userDetails.getPassword() != null && !userDetails.getPassword().isEmpty()) {
-                existingUser.setPassword(userDetails.getPassword());  // 비밀번호 변경
+                existingUser.setPassword(passwordEncoder.encode(userDetails.getPassword()) );  // 비밀번호 변경
             }
 
             return userRepository.save(existingUser);
@@ -102,6 +93,19 @@ public class UserService {
 	        userRepository.delete(user);
 	    }
 	}
+	@Transactional
+    public void updateRoleToMember(String username) {
+		System.out.println("Member로 전환" + username);
+        User user = userRepository.findByUsername(username)
+            .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        
+        // 사용자 role을 MEMBER로 변경
+        user.setRoleType(RoleType.MEMBER);
+
+        // 변경된 사용자 저장
+        userRepository.save(user);
+    }
+	
 	
     
 }

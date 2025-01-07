@@ -1,5 +1,7 @@
 package com.example.hanbit.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -23,10 +25,13 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hanbit.service.JwtService;
+import com.example.hanbit.domain.RoleType;
 import com.example.hanbit.domain.User;
 import com.example.hanbit.dto.JwtResponse;
 import com.example.hanbit.dto.LoginForm;
 import com.example.hanbit.dto.SignUpForm;
+import com.example.hanbit.dto.UpdateForm;
+import com.example.hanbit.repository.UserRepository;
 import com.example.hanbit.security.UserDetailsImpl;
 import com.example.hanbit.security.UserDetailsServiceImpl;
 import com.example.hanbit.service.UserService;
@@ -39,10 +44,11 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 	
 	private final UserService userService;
-	private final ModelMapper modelMapper;
 	private final JwtService jwtService;
 	private final AuthenticationManager authenticationManager;
 	private final UserDetailsServiceImpl userDetailsServiceImpl;
+	private final UserRepository userRepository;
+	private final PasswordEncoder passwordEncoder;
 	
 	@PostMapping("/signup")
 	public ResponseEntity<?> signUp(@Valid @RequestBody SignUpForm signUpForm, BindingResult bindingResult) {
@@ -70,14 +76,13 @@ public class UserController {
 	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input data");
 	    }
 	    try {
-	    	System.out.println(loginForm.getLogin_username());
-	    	System.out.println(loginForm.getLogin_password());
 	        authenticationManager.authenticate(
 	            new UsernamePasswordAuthenticationToken(loginForm.getLogin_username(), loginForm.getLogin_password())
 	        );
 	        UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsServiceImpl.loadUserByUsername(loginForm.getLogin_username());
 	        User user = userDetails.getUser();
-
+	        if (user.getRoleType().equals(RoleType.LEAVER))
+	        	userService.updateRoleToMember(loginForm.getLogin_username());
 	        String token = jwtService.getToken(loginForm.getLogin_username());
 	        System.out.println(user);
 	        JwtResponse response = new JwtResponse(
@@ -96,16 +101,19 @@ public class UserController {
 	}
 	
 	@PutMapping("/updateUser")
-	public ResponseEntity<?> updateUser(@RequestBody User updatedUser, HttpServletRequest request) {
+	public ResponseEntity<?> updateUser(@RequestBody UpdateForm updatedUser, HttpServletRequest request) {
 	    // JWT에서 사용자 정보를 추출
+		System.out.println(updatedUser);
 	    String username = jwtService.getAuthUser(request);  // 이제 HttpServletRequest를 사용하여 사용자 정보 추출
+	    
 	    if (username != null) {
-	        // 추출된 username을 사용하여 업데이트된 사용자 정보 설정
-	        updatedUser.setUsername(username);
 
 	        // 사용자 정보를 업데이트하는 서비스 호출
 	        User updatedUserInfo = userService.updateUser(username, updatedUser);
-	        return ResponseEntity.ok(updatedUserInfo);  // 성공적으로 업데이트된 정보 반환
+	        
+	        System.out.println("updatedUserInfo"+updatedUserInfo);
+	        
+	        return ResponseEntity.ok("업데이트 완료");  // 성공적으로 업데이트된 정보 반환
 	    } else {
 	        // 토큰이 유효하지 않거나 사용자가 인증되지 않은 경우
 	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("회원정보를 찾지 못했습니다.");
@@ -133,4 +141,25 @@ public class UserController {
 	    userService.deleteOldLeavers();
 	    return "3일이 지나 사용자 삭제가 완료되었습니다.";
 	}
+	
+	@PostMapping("/usercheck")
+	public ResponseEntity<?> checkPassword(@RequestBody Map<String, String> request, HttpServletRequest httpRequest) {
+	    String username = jwtService.getAuthUser(httpRequest);
+	    if (username == null) {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다.");
+	    }
+
+	    String inputPassword = request.get("password");
+
+	    User user = userRepository.findByUsername(username)
+	        .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+
+	    // 비밀번호 검증 (예: Bcrypt 사용)
+	    if (passwordEncoder.matches(inputPassword, user.getPassword())) {
+	        return ResponseEntity.ok("비밀번호 확인 성공");
+	    } else {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증에 실패했습니다.");
+	    }
+	}
+
 }

@@ -39,7 +39,7 @@ public class SecurityConfig {
             			"/home","/intro"
             			).permitAll()
                 .antMatchers(HttpMethod.POST,
-                		"/home","/signup","login","/intro"
+                		"/home","/signup","/login","/intro","/api/email/send-verification-email","/api/email/verify-code"
                 		).permitAll() 
                 .antMatchers(HttpMethod.PUT,
                 		"/home"
@@ -52,13 +52,14 @@ public class SecurityConfig {
             .exceptionHandling()
                 .authenticationEntryPoint(authEntryPoint) // 인증되지 않은 접근 시 진입점 설정
             .and()
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // UsernamePasswordAuthenticationFilter 전에 JWT 필터 추가
+            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class) // UsernamePasswordAuthenticationFilter 전에 JWT 필터 추가
+        	.cors();
 
         return http.build();
     }
     
     @Bean
-	CorsConfigurationSource configurationSource() {
+	public CorsConfigurationSource configurationSource() {
 		CorsConfiguration config = new CorsConfiguration();
 		config.addAllowedOrigin("http://localhost:5173"); // 특정 오리진을 허용(예: 로컬호스트의 프론트엔드)
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource(); 
