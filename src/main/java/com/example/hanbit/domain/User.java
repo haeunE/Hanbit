@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,6 +43,7 @@ public class User {
 	private String name;
 	
 	// 이메일
+	// 이메일
 	@Column(nullable = false, length = 50, unique = true)
 	private String email;
 	
@@ -55,7 +57,15 @@ public class User {
 	
 	//비상 연락처
 	@Column(nullable = false)
+	@UpdateTimestamp
+	private Timestamp updateDate;
+	
+	//비상 연락처
+	@Column(nullable = false)
 	private String tel;
+	
+	@Column(nullable = false)
+	private boolean foreignYN;
 	
 	@Column(nullable = false)
 	private boolean foreignYN;
