@@ -21,12 +21,9 @@ public class MapController {
 
     @GetMapping("/location")
     public String getLocation(@RequestParam double latitude, @RequestParam double longitude) {
-        System.out.println("Latitude: " + latitude);
-        System.out.println("Longitude: " + longitude);
-
         String URL = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?request=coordsToaddr&coords=" 
                      + longitude + "," + latitude 
-                     + "&sourcecrs=epsg:4326&orders=admcode,legalcode&output=json";
+                     + "&sourcecrs=epsg:4326&orders=admcode&output=json";
 
         RestTemplate restTemplate = new RestTemplate();
         
