@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -95,7 +96,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/updateUser")
-	public ResponseEntity<User> updateUser(@RequestBody User updatedUser, HttpServletRequest request) {
+	public ResponseEntity<?> updateUser(@RequestBody User updatedUser, HttpServletRequest request) {
 	    // JWT에서 사용자 정보를 추출
 	    String username = jwtService.getAuthUser(request);  // 이제 HttpServletRequest를 사용하여 사용자 정보 추출
 	    if (username != null) {
@@ -107,8 +108,29 @@ public class UserController {
 	        return ResponseEntity.ok(updatedUserInfo);  // 성공적으로 업데이트된 정보 반환
 	    } else {
 	        // 토큰이 유효하지 않거나 사용자가 인증되지 않은 경우
-	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("회원정보를 찾지 못했습니다.");
+	    }
+	}
+	@PostMapping("/deleteUser")
+	public ResponseEntity<?> deleteUser(HttpServletRequest request) {
+	    String username = jwtService.getAuthUser(request);
+	    if (username != null) {
+	        // 사용자 상태를 LEAVER로 변경
+	        userService.requestLeave(username);
+	        
+	        // 3일 이상 지난 사용자들을 삭제하는 메서드를 호출
+	        userService.deleteOldLeavers();
+	        
+	        return ResponseEntity.ok("휴면 계정처리 완료 및 3일 지난 사용자 삭제 완료");
+	    } else {
+	        // 토큰이 유효하지 않거나 사용자가 인증되지 않은 경우
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("회원정보를 찾지 못했습니다.");
 	    }
 	}
 
+	@DeleteMapping("/cleanup")
+	public String cleanupLeavers() {
+	    userService.deleteOldLeavers();
+	    return "3일이 지나 사용자 삭제가 완료되었습니다.";
+	}
 }

@@ -27,7 +27,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy =  GenerationType.IDENTITY)
 	@Column(name = "USER_ID")
-	private Integer id; // 순서
+	private Long id; // 순서
 	
 	// 회원 ID
 	@Column(length = 50, nullable = false, unique = true)
@@ -63,5 +63,5 @@ public class User {
 	//Rolltype
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private RoleType role = RoleType.MEMBER;
+	private RoleType roleType = RoleType.MEMBER;
 }

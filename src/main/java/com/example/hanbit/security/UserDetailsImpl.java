@@ -23,7 +23,7 @@ public class UserDetailsImpl implements UserDetails{
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> roleList = new ArrayList<>();
 		roleList.add(()->{
-			return"ROLE_"+user.getRole();
+			return"ROLE_"+user.getRoleType();
 		});
 		return roleList;
 	}

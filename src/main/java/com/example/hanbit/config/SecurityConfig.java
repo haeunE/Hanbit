@@ -35,7 +35,18 @@ public class SecurityConfig {
         http
             .csrf().disable() // CSRF 보호 비활성화
             .authorizeRequests()
-                .antMatchers("/**").permitAll() // 공개된 경로 허용 (예: /public/**)
+            	.antMatchers(HttpMethod.GET,
+            			"/home"
+            			).permitAll()
+                .antMatchers(HttpMethod.POST,
+                		"/home","/signup","login"
+                		).permitAll() 
+                .antMatchers(HttpMethod.PUT,
+                		"/home"
+                		).permitAll()
+                .antMatchers(HttpMethod.DELETE,
+                		"/home"
+                		).permitAll()
                 .anyRequest().authenticated() // 나머지 요청은 인증이 필요함
             .and()
             .exceptionHandling()

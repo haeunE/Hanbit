@@ -1,6 +1,10 @@
 package com.example.hanbit.service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +83,25 @@ public class UserService {
             throw new RuntimeException("User not found");
         }
     }
+	@Transactional
+    public void requestLeave(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        user.setRoleType(RoleType.LEAVER);
+        userRepository.save(user);
+    }
+
+	@Transactional
+	public void deleteOldLeavers() {
+	    // 현재 시간 기준으로 3일이 지난 사용자 삭제
+	    LocalDateTime threeDaysAgo = LocalDateTime.now().minusDays(3);
+	    List<User> oldLeavers = userRepository.findAllByRoleTypeAndUpdateDateBefore(RoleType.LEAVER, threeDaysAgo);
+
+	    // 삭제할 사용자들을 처리
+	    for (User user : oldLeavers) {
+	        userRepository.delete(user);
+	    }
+	}
 	
     
 }
