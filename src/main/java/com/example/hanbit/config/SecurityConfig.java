@@ -8,7 +8,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,7 +21,6 @@ import com.example.hanbit.filter.JwtFilter;
 import com.example.hanbit.security.AuthEntryPoint;
 
 @Configuration
-@EnableWebSecurity
 @EnableWebSecurity
 public class SecurityConfig {
 
@@ -38,10 +36,10 @@ public class SecurityConfig {
             .csrf().disable() // CSRF 보호 비활성화
             .authorizeRequests()
             	.antMatchers(HttpMethod.GET,
-            			"/home"
+            			"/home","/intro"
             			).permitAll()
                 .antMatchers(HttpMethod.POST,
-                		"/home","/signup","login"
+                		"/home","/signup","login","/intro"
                 		).permitAll() 
                 .antMatchers(HttpMethod.PUT,
                 		"/home"

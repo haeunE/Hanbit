@@ -42,7 +42,7 @@ public class User {
 	@Column(nullable = false, length = 10)
 	private String name;
 	
-	// 이메일
+	
 	// 이메일
 	@Column(nullable = false, length = 50, unique = true)
 	private String email;
