@@ -35,8 +35,9 @@ spring.mail.properties.mail.smtp.starttls.enable=true
 2. 로그인/회원가입 하기
 3. 카드등록하기
 4. AI·NAVER API1에 들어가서 API발급받기
-5. Application 이름 : hanbit
-6. Web 서비스 URL(최대 10개) : http://localhost:5173/, http://localhost:8888/ 넣어주기
+5. Application 생성 버튼 누르기 - Maps 전체 선택
+6. Application 이름 : hanbit
+7. Web 서비스 URL(최대 10개) : http://localhost:5173/, http://localhost:8888/ 넣어주기
 
 ## 2. application.properties 설정하기
 ```
