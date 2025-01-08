@@ -36,7 +36,7 @@ public class SecurityConfig {
             .csrf().disable() // CSRF 보호 비활성화
             .authorizeRequests()
             	.antMatchers(HttpMethod.GET,
-            			"/home","/intro"
+            			"/home","/intro","/location"
             			).permitAll()
                 .antMatchers(HttpMethod.POST,
                 		"/home","/signup","/login","/intro","/api/email/send-verification-email","/api/email/verify-code"
