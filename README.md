@@ -34,7 +34,9 @@ spring.mail.properties.mail.smtp.starttls.enable=true
 1. [https://www.ncloud.com/ 가입하기](https://www.ncloud.com/product/applicationService/maps) 이용신청 누르기
 2. 로그인/회원가입 하기
 3. 카드등록하기
-3. AI·NAVER API1에 들어가서 API발급받기
+4. AI·NAVER API1에 들어가서 API발급받기
+5. Application 이름 : hanbit
+6. Web 서비스 URL(최대 10개) : http://localhost:5173/, http://localhost:8888/ 넣어주기
 
 ## 2. application.properties 설정하기
 ```
