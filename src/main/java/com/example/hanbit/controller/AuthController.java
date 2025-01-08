@@ -24,6 +24,7 @@ public class AuthController {
     @PostMapping("/send-verification-email")
     public ResponseEntity<?> sendVerificationEmail(@RequestBody Map<String, String> request) {
     	String email = request.get("email");
+    	System.out.println(email);
         String verificationCode = emailService.generateVerificationCode();
         emailService.sendVerificationEmail(email, verificationCode);
 

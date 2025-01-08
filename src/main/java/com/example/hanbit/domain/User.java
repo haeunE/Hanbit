@@ -1,6 +1,7 @@
 package com.example.hanbit.domain;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.AllArgsConstructor;
@@ -27,7 +29,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy =  GenerationType.IDENTITY)
 	@Column(name = "USER_ID")
-	private Integer id; // 순서
+	private Long id; // 순서
 	
 	// 회원 ID
 	@Column(length = 50, nullable = false, unique = true)
@@ -41,6 +43,7 @@ public class User {
 	@Column(nullable = false, length = 10)
 	private String name;
 	
+	
 	// 이메일
 	@Column(nullable = false, length = 50, unique = true)
 	private String email;
@@ -50,8 +53,10 @@ public class User {
 	@Column(nullable = false)
 	private Timestamp createDate;
 	
+	//비상 연락처
+	@Column(nullable = false)
 	@UpdateTimestamp
-	private Timestamp updateDate;
+	private LocalDateTime updateDate;
 	
 	//비상 연락처
 	@Column(nullable = false)
@@ -63,5 +68,5 @@ public class User {
 	//Rolltype
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private RoleType role = RoleType.MEMBER;
+	private RoleType roleType = RoleType.MEMBER;
 }
