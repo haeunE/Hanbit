@@ -144,6 +144,7 @@ public class UserController {
 	
 	@PostMapping("/usercheck")
 	public ResponseEntity<?> checkPassword(@RequestBody Map<String, String> request, HttpServletRequest httpRequest) {
+		System.out.println(httpRequest);
 	    String username = jwtService.getAuthUser(httpRequest);
 	    if (username == null) {
 	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("인증되지 않은 사용자입니다.");

@@ -36,16 +36,16 @@ public class SecurityConfig {
             .csrf().disable() // CSRF 보호 비활성화
             .authorizeRequests()
             	.antMatchers(HttpMethod.GET,
-            			"/home","/intro","/location"
+            			"/test","/home","/intro","/location"
             			).permitAll()
                 .antMatchers(HttpMethod.POST,
-                		"/home","/signup","/login","/intro","/api/email/send-verification-email","/api/email/verify-code"
+                		"/test","/home","/signup","/login","/intro","/api/email/send-verification-email","/api/email/verify-code"
                 		).permitAll() 
                 .antMatchers(HttpMethod.PUT,
-                		"/home"
+                		"/test","/home"
                 		).permitAll()
                 .antMatchers(HttpMethod.DELETE,
-                		"/home"
+                		"/test","/home"
                 		).permitAll()
                 .anyRequest().authenticated() // 나머지 요청은 인증이 필요함
             .and()
