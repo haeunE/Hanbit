@@ -44,8 +44,15 @@ spring.mail.properties.mail.smtp.starttls.enable=true
 map.api.client-id=클라이언트 아이디
 map.api.client-secret=클라이언트 시크릿 키
 ```
+# 관리자 계정 생성
+application.properties 에 아래 내용을 추가 하세요
+```
+# 관리자계정 생성
+admin.default.username=관리자아이디
+admin.default.password=관리자비밀번호
+```
 
-# application.properties
+# 최종 [application.properties]
 ```
 spring.application.name=hanbit
 
@@ -78,5 +85,11 @@ spring.mail.properties.mail.smtp.starttls.enable=true
 map.api.client-id=클라이언트 아이디
 map.api.client-secret=클라이언트 시크릿 키
 
+# 관리자계정 생성
+admin.default.username=관리자아이디
+admin.default.password=관리자비밀번호
+
+
+```
 
 
