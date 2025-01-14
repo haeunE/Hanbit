@@ -24,6 +24,11 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 	
+	public Long findid(String username) {
+		Optional<User> user = userRepository.findByUsername(username);
+		Long id = user.get().getId();
+		return id;
+	}
 
 	
 	public void checkUser(User user) {
