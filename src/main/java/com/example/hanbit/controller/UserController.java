@@ -87,6 +87,7 @@ public class UserController {
 	        System.out.println(user);
 	        JwtResponse response = new JwtResponse(
 	                token,
+	                user.getId(),
 	                user.getUsername(),
 	                user.getName(), // 사용자 이름
 	                user.getEmail(),

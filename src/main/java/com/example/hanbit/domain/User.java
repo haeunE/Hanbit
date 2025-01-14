@@ -2,6 +2,7 @@ package com.example.hanbit.domain;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,17 +11,25 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -53,7 +62,6 @@ public class User {
 	@Column(nullable = false)
 	private Timestamp createDate;
 	
-	//비상 연락처
 	@Column(nullable = false)
 	@UpdateTimestamp
 	private LocalDateTime updateDate;
@@ -69,4 +77,8 @@ public class User {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private RoleType roleType = RoleType.MEMBER;
+	
+	@OneToMany(mappedBy = "user")
+	@JsonManagedReference
+	private List<Review> reviews;
 }
