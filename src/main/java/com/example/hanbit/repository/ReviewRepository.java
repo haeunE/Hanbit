@@ -9,4 +9,5 @@ import com.example.hanbit.domain.Review;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long>{
 	List<Review> findByPlaceidAndTypeid(String placeid, String typeid);
+	List<Review> findByUserId(Long userId);
 }

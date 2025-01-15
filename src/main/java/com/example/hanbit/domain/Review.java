@@ -48,11 +48,14 @@ public class Review {
     @Column(nullable = false, length = 1000)
     private String content;
 
-    @Column
+    @Column(nullable = false)
     private String placeid;
 
-    @Column
+    @Column(nullable = false)
     private String typeid;
+    
+    @Column(nullable = false)
+    private String placetitle;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

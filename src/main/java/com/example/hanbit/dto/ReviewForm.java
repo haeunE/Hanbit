@@ -10,4 +10,5 @@ public class ReviewForm {
     private String content;
     private String placeid;
     private String typeid;
+    private String placetitle;
 }
