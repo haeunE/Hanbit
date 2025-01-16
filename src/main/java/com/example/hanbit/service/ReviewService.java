@@ -13,8 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.hanbit.domain.Photo;
 import com.example.hanbit.domain.Review;
 import com.example.hanbit.domain.User;
+import com.example.hanbit.dto.ReviewEditForm;
+import com.example.hanbit.repository.PhotoRepository;
 import com.example.hanbit.repository.ReviewRepository;
 import com.example.hanbit.repository.UserRepository;
 
@@ -25,6 +28,9 @@ public class ReviewService {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private PhotoRepository photoRepository;
 
     private final String UPLOAD_DIR = "uploads/";
 
@@ -35,17 +41,17 @@ public class ReviewService {
     }
 
     // 특정 리뷰 가져오기
-    public Optional<Review> getReviewById(Long id) {
-        return reviewRepository.findById(id);
+    public List<Review> getReviewsByUserId(Long userId) {
+        return reviewRepository.findByUserId(userId);
     }
 
 
     // 리뷰 삭제
-    public void deleteReview(Long id) {
-        if (!reviewRepository.existsById(id)) {
-            throw new IllegalArgumentException("Review not found with ID: " + id);
+    public void deleteReview(Long reviewId) {
+        if (!reviewRepository.existsById(reviewId)) {
+            throw new IllegalArgumentException("Review not found with ID: " + reviewId);
         }
-        reviewRepository.deleteById(id);
+        reviewRepository.deleteById(reviewId);
     }
 
     // 사진 저장
@@ -65,5 +71,24 @@ public class ReviewService {
 
         // 저장된 사진의 상대 경로 반환
         return UPLOAD_DIR + fileName;
+    }
+    
+    public void editReview(Long reviewId, ReviewEditForm request) {
+        // 리뷰 수정
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new RuntimeException("리뷰를 찾을 수 없습니다."));
+        
+        review.setTitle(request.getTitle());
+        review.setContent(request.getContent());
+        reviewRepository.save(review);
+
+        // 삭제된 이미지 처리
+        if (request.getDeletedImages() != null && !request.getDeletedImages().isEmpty()) {
+            for (Long imageId : request.getDeletedImages()) {
+                Photo image = photoRepository.findById(imageId)
+                        .orElseThrow(() -> new RuntimeException("이미지를 찾을 수 없습니다."));
+                photoRepository.delete(image); // 이미지 삭제
+            }
+        }
     }
 }
