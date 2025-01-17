@@ -1,5 +1,9 @@
 package com.example.hanbit.dto;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+import com.example.hanbit.domain.RoleType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -18,4 +22,6 @@ public class JwtResponse {
     private String tel;
     @JsonProperty("foreignYN")
     private boolean isForeigner;
+    @Enumerated(EnumType.STRING)
+    private RoleType role;
 }
