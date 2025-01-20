@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,8 +49,8 @@ public class AdminService {
 	                place.setAddo(nextLine[6]);
 	                place.setAddn(nextLine[7]);
 	                place.setTitle(nextLine[8]);
-	                place.setX(Double.parseDouble(nextLine[9]));
-	                place.setY(Double.parseDouble(nextLine[10]));
+	                place.setX(Double.parseDouble(nextLine[9].trim())); 
+	                place.setY(Double.parseDouble(nextLine[10].trim()));
 
 	                places.add(place);
 	            }
