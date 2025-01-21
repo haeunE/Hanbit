@@ -51,6 +51,23 @@ spring.mail.properties.mail.smtp.starttls.enable=true
 map.api.client-id=클라이언트 아이디
 map.api.client-secret=클라이언트 시크릿 키
 ```
+
+# 네이버 지역 검색 API
+1. https://developers.naver.com/apps/#/list 로그인
+2. Application - 애플리케이션 등록 이용신청
+3. application.properties 에 아래 내용을 추가 하세요
+
+  X-Naver-Client-Id=클라이언트 아이디
+  X-Naver-Client-Secret=클라이언트 시크릿 키
+
+# 실시간 인구 데이터 API
+1. https://data.seoul.go.kr/dataList/OA-21778/F/1/datasetView.do 로그인
+2. 위 페이지의 실시간 인구데이터 api 이용신청 후 인증키 발급
+3. application.properties 에 아래 내용을 추가 하세요
+   
+  seoul.opendata.api.key=클라이언트 키
+
+
 # 관리자 계정 생성
 application.properties 에 아래 내용을 추가 하세요
 ```
@@ -95,6 +112,13 @@ spring.mail.properties.mail.smtp.starttls.enable=true
 
 map.api.client-id=클라이언트 아이디
 map.api.client-secret=클라이언트 시크릿 키
+
+# 네이버 지역 검색 api 인증키
+X-Naver-Client-Id=클라이언트 아이디
+X-Naver-Client-Secret=클라이언트 시크릿 키
+
+#서울 열린데이터광장 - 실시간 인구데이터에 사용
+seoul.opendata.api.key=클라이언트 키
 
 # 관리자계정 생성
 admin.default.username=관리자아이디
