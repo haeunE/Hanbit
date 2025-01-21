@@ -60,7 +60,7 @@ admin.default.password=관리자비밀번호
 ```
 
 # 관리자 장소csv 파일 업로드
-https://drive.google.com/file/d/1kK8aodgtpbjHDara5_hOXvF03TCIOGlg/view?usp=drive_link
+https://drive.google.com/file/d/1LcjgOF5tTVKbV4yfzac2BfNuGQgGAPoe/view?usp=sharing
 위 파일 다운로드 후 관리자 페이지에서 업로드
 
 # 최종 [application.properties]
