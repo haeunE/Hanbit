@@ -100,6 +100,9 @@ map.api.client-secret=클라이언트 시크릿 키
 admin.default.username=관리자아이디
 admin.default.password=관리자비밀번호
 
+#파일 크기 제한
+spring.servlet.multipart.max-file-size=50MB
+spring.servlet.multipart.max-request-size=50MB
 
 ```
 
