@@ -53,9 +53,7 @@ public class PopulationController {
       ResponseEntity<String> response = restTemplate.exchange(searchMapUrl, HttpMethod.GET, entity, String.class);
 
       if (response.getStatusCode().is2xxSuccessful()) {
-         // 응답 JSON에서 "results" 배열만 추출하고 "places"로 변환
          String body = response.getBody();
-//         String modifiedBody = body.replace("\"results\":", "\"places\":");
          return ResponseEntity.ok(body);
       } else {
          return ResponseEntity.status(500).body("Error: " + response.getStatusCode());
