@@ -2,11 +2,9 @@ package com.example.hanbit.controller;
 
 
 import java.io.IOException;
-import java.lang.foreign.Linker.Option;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +30,6 @@ import com.example.hanbit.dto.ReviewForm;
 import com.example.hanbit.repository.ReviewRepository;
 import com.example.hanbit.repository.UserRepository;
 import com.example.hanbit.service.ReviewService;
-import com.example.hanbit.service.UserService;
 
 @RestController
 @RequestMapping("/reviews")

@@ -58,18 +58,21 @@ public class UserController {
 	        bindingResult.getAllErrors().forEach(error -> {
 	            errorMessages.append(error.getDefaultMessage()).append("\n");
 	        });
-	        return ResponseEntity.badRequest().body(errorMessages.toString());
+	        return ResponseEntity.badRequest().body(errorMessages.toString()); // 400 에러와 함께 오류 메시지 반환
 	    }
-	    
+
 	    try {
-	    	// 유효성 검사 통과 시 회원가입 로직 처리
-		    userService.saveUser(signUpForm);
+	        userService.saveUser(signUpForm);
 	        return new ResponseEntity<>("회원가입 성공", HttpStatus.OK);
+	    } catch (IllegalArgumentException e) {
+	        // 중복된 값이 있을 경우 오류 메시지를 반환
+	        return ResponseEntity.badRequest().body(e.getMessage());
 	    } catch (Exception e) { 
 	        // 예외 처리
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원가입 실패: " + e.getMessage());
 	    }
 	}
+
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@Valid @RequestBody LoginForm loginForm, BindingResult bindingResult) {
 	    if (bindingResult.hasErrors()) {
