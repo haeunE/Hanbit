@@ -36,10 +36,10 @@ public class SecurityConfig {
             .csrf().disable() // CSRF 보호 비활성화
             .authorizeRequests()
             	.antMatchers(HttpMethod.GET,
-            			"/test","/home","/intro","/location","/reviews","/upload/**"
+            			"/test","/home","/intro","/location","/reviews","/upload/**","/places/**"
             			).permitAll()
                 .antMatchers(HttpMethod.POST,
-                		"/test","/home","/signup","/login","/intro","/api/email/send-verification-email","/api/email/verify-code"
+                		"/test","/home","/signup","/login","/intro","/api/email/send-verification-email","/api/email/verify-code","/places/**"
                 		).permitAll() 
                 .antMatchers(HttpMethod.PUT,
                 		"/test","/home"
@@ -47,6 +47,7 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.DELETE,
                 		"/test","/home"
                 		).permitAll()
+//                .antMatchers("/api/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated() // 나머지 요청은 인증이 필요함
             .and()
             .exceptionHandling()

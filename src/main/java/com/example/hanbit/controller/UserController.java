@@ -92,9 +92,9 @@ public class UserController {
 	                user.getName(), // 사용자 이름
 	                user.getEmail(),
 	                user.getTel(), // 비상 연락처
-	                user.isForeignYN() // 외국인 여부
+	                user.isForeignYN(), // 외국인 여부
+	                user.getRoleType()
 	            );
-
 	        return ResponseEntity.ok(response);
 	    } catch (RuntimeException e) {
 	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
