@@ -1,5 +1,6 @@
 package com.example.hanbit.dto;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -15,6 +16,7 @@ public class SignUpForm {
 	// 회원 ID (8자 이상, 영문, 숫자만 가능, not null)
     @NotNull(message = "회원 ID는 필수입니다.")
     @Pattern(regexp = "^[a-zA-Z0-9]{8,}$", message = "회원 ID는 8자 이상, 영문과 숫자만 가능합니다.")
+//    @Column(unique = true) // 아이디 중복 방지
     private String username;
 
     // 비밀번호 (영어, 숫자, 특수문자 3가지 조합, not null)
@@ -30,10 +32,12 @@ public class SignUpForm {
     // 이메일 (이메일 형식 준수, not null)
     @NotNull(message = "이메일은 필수입니다.")
     @Email(message = "유효한 이메일을 입력해주세요.")
+//    @Column(unique = true) // 이메일 중복 방지
     private String email;
 
     // 비상 연락처 (not null)
     @NotNull(message = "전화번호는 필수입니다.")
+//    @Column(unique = true) // 전화번호 중복 방지
     private String tel;
 
     // 외국인 여부 (T/F, not null)
